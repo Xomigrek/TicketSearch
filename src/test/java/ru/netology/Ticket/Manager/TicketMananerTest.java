@@ -4,10 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.netology.Ticket.Repository.TicketRepository;
 import ru.netology.Ticket.Ticket;
+import ru.netology.Ticket.TicketByPriceAscComparator;
 
 public class TicketMananerTest {
     TicketRepository repo = new TicketRepository();
     TicketManager manager = new TicketManager(repo);
+    TicketByPriceAscComparator priceComparator = new TicketByPriceAscComparator();
 
     Ticket ticket1 = new Ticket(1, 200, "MSK", "SPB");
     Ticket ticket2 = new Ticket(2, 100, "MSK", "SPB");
@@ -27,7 +29,7 @@ public class TicketMananerTest {
         manager.add(ticket6);
         manager.add(ticket7);
         Ticket [] expected = {ticket2, ticket4,ticket1,ticket6,ticket3,ticket5};
-        Ticket [] actual = manager.searchBy("MSK", "SPB");
+        Ticket [] actual = manager.searchBy("MSK", "SPB", priceComparator);
         Assertions.assertArrayEquals(expected, actual);
     }
     @Test
@@ -40,7 +42,7 @@ public class TicketMananerTest {
         manager.add(ticket6);
         manager.add(ticket7);
         Ticket [] expected = {ticket7};
-        Ticket [] actual = manager.searchBy("SPB", "MSK");
+        Ticket [] actual = manager.searchBy("SPB", "MSK", priceComparator);
         Assertions.assertArrayEquals(expected, actual);
     }
     @Test
@@ -53,7 +55,7 @@ public class TicketMananerTest {
         manager.add(ticket6);
         manager.add(ticket7);
         Ticket [] expected = { };
-        Ticket [] actual = manager.searchBy("SPB", "SPB");
+        Ticket [] actual = manager.searchBy("SPB", "SPB", priceComparator);
         Assertions.assertArrayEquals(expected, actual);
     }
 }
